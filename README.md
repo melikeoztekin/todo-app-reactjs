@@ -5,6 +5,6 @@
 ##### kategori ekleme, silme, güncelleme
 ##### kategoriye özel durum ekleme, silme, güncelleme
 ##### görev ekleme, silme, güncelleme
-##### görev listesinde filltreleme işlemi
+##### görev listesinde filtreleme işlemi
 ##### oluşturulan göreve eklenen ilgili durum rengi oluşturma
 ![image](https://user-images.githubusercontent.com/77509002/193053456-106c287d-29ea-4ede-83e0-f90d442395db.png)
