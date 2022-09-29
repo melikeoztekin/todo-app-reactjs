@@ -2,37 +2,16 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const AddTodoForm = (props) => {
+  /* ekleme işleminde açılan selectlerde kategori seçilmeden durum bilgisi görüntülenmemesi için filtre */
+  const [categoryFilter, setCategoryFilter] = useState(0);
+
+  /* görev ekleme işleminde ilk değerler */
   const [formItem, setFormItem] = useState({
     id: 0,
     categoryId: 0,
     statusId: 0,
     description: "",
   });
-
-  const handleChange = (e) => {
-    setFormItem({
-      id: 0,
-      categoryId: e.target.value,
-      statusId: formItem.statusId,
-      description: formItem.description,
-    });
-  };
-  const handleChange2 = (e) => {
-    setFormItem({
-      id: 0,
-      categoryId: formItem.categoryId,
-      statusId: e.target.value,
-      description: formItem.description,
-    });
-  };
-  const handleChange3 = (e) => {
-    setFormItem({
-      id: 0,
-      categoryId: formItem.categoryId,
-      statusId: formItem.statusId,
-      description: e.target.value,
-    });
-  };
 
   return (
     <div>
@@ -43,8 +22,20 @@ const AddTodoForm = (props) => {
         <Form>
           <Form.Group className="mb-3" controlId="formCategory">
             <Form.Label>Kategori</Form.Label>
-            <Form.Select value={formItem.categoryId} onChange={handleChange}>
-              <option value={0}>Kategori Seçiniz</option>
+            <Form.Select
+              /* kategoriyi seçerek değerini okuma */
+              onChange={(e) => {
+                var data = e.target.value;
+                setCategoryFilter(parseInt(data));
+                setFormItem({
+                  id: 0,
+                  categoryId: parseInt(data),
+                  statusId: formItem.statusId,
+                  description: formItem.description,
+                });
+              }}
+            >
+              <option value={0}>Bir kategori seçin...</option>
               {props.categoryList.map((ct) => (
                 <option key={ct.id} value={ct.id}>
                   {ct.categoryName}
@@ -55,13 +46,25 @@ const AddTodoForm = (props) => {
 
           <Form.Group className="mb-3" controlId="formStatus">
             <Form.Label>Durum</Form.Label>
-            <Form.Select value={formItem.statusId} onChange={handleChange2}>
-              <option value={0}>Durum Seçiniz</option>
-              {props.statusList.map((st) => (
-                <option key={st.id} value={st.id}>
-                  {st.status}
-                </option>
-              ))}
+            <Form.Select
+              onChange={(e) => {
+                var data = e.target.value;
+                setFormItem({
+                  id: 0,
+                  categoryId: formItem.categoryId,
+                  statusId: parseInt(data),
+                  description: formItem.description,
+                });
+              }}
+            >
+              <option value={0}>Bir durum seçin...</option>
+              {props.statusList
+                .filter((x) => x.categoryId == categoryFilter)
+                .map((st) => (
+                  <option key={st.id} value={st.id}>
+                    {st.status}
+                  </option>
+                ))}
             </Form.Select>
           </Form.Group>
 
@@ -71,16 +74,23 @@ const AddTodoForm = (props) => {
               as="textarea"
               rows={3}
               type="text"
-              onChange={handleChange3}
+              onChange={(e) => {
+                setFormItem({
+                  id: 0,
+                  categoryId: formItem.categoryId,
+                  statusId: formItem.statusId,
+                  description: e.target.value,
+                });
+              }}
               placeholder="görevin içeriği hakkında bilgi veriniz."
             />
           </Form.Group>
+          {/* bu butona tıklandığında yeni görevi görevler listesine ekle */}
           <Button
             type="button"
             variant="outline-dark"
             style={{ width: "100%" }}
             onClick={() => {
-              console.error(formItem);
               props.addTodo(formItem);
             }}
           >

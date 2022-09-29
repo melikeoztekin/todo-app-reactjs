@@ -3,18 +3,21 @@ import AddCategoryForm from "./AddCategoryForm";
 import EditCategoryForm from "./EditCategoryForm";
 import { StatusList } from "../status";
 import { Button, Col, ListGroup, Row, Modal } from "react-bootstrap";
-import { toast } from "react-toastify";
 
 const CategoryList = (props) => {
-  const [selectCategory, setSelectCategory] = useState(null);
+  /* kategori düzenleme işleminde seçilen kategorinin bilgilerinin gelmesi için */
+  const [selectCategory, setSelectCategory] = useState();
 
+  /* kategori düzenleme modalının başlangıçta kapalı gelmesi için */
   const [editCategoryModal, setEditCategoryModal] = useState(false);
   const handleEditCategoryModalClose = () => setEditCategoryModal(false);
   const handleEditCategoryModalShow = (x) => {
+    // Açılan modal içerisinde seçilen kategori bilgilerinin gelmesi
     setSelectCategory(x);
     setEditCategoryModal(true);
   };
 
+  /* durum ekleme işleminde modal kapalı gelmesi için ilk değeri false verildi */
   const [addStatusModal, setAddStatusModal] = useState(false);
   const handleAddStatusModalClose = () => setAddStatusModal(false);
   const handleAddStatusModalShow = (x) => {
@@ -82,6 +85,7 @@ const CategoryList = (props) => {
           addStatus={props.addStatus}
           deleteStatus={props.deleteStatus}
           statusColorList={props.statusColorList}
+          editStatus={props.editStatus}
         />
       </Modal>
     </div>

@@ -34,7 +34,7 @@ const EditCategoryForm = (props) => {
               props.editCategory(formItem);
             }}
           >
-            Düzenle
+            Kaydet
           </Button>
         </Form>
       </Modal.Body>

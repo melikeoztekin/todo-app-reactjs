@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const AddCategoryForm = (props) => {
+  /* kategori ekleme işleminde ilk değerler */
   const [formItem, setFormItem] = useState({
     id: 0,
     categoryName: "",
   });
 
-  const handleChange = (e) => {
-    setFormItem({
-      id: 0,
-      categoryName: e.target.value,
-    });
-  };
   return (
     <div>
       <h4>Yeni Kategori Oluştur</h4>
@@ -20,7 +15,12 @@ const AddCategoryForm = (props) => {
         <Form.Group className="mb-3" controlId="formCategory">
           <Form.Control
             type="text"
-            onChange={handleChange}
+            onChange={(e) => {
+              setFormItem({
+                id: 0,
+                categoryName: e.target.value,
+              });
+            }}
             placeholder="kategori adı yazınız..."
           />
         </Form.Group>
